@@ -42,6 +42,7 @@ Label(paymentFrame, text="Veuillez procéder au paiement pour récupérer vos in
 
 ttk.Button(paymentFrame, text="Payer", command=lambda: show_form_frame(paymentFrame, formFrame)).grid(row=7, column=0)
 
+# affichage de la Frame
 paymentFrame.grid(row=0, column=0, padx=100, pady=100)
 
 
