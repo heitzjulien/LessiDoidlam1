@@ -53,6 +53,6 @@ config.yaml
 *.spec
 
 *.csv
-*.xlsx
-*.docx
+
+
 
