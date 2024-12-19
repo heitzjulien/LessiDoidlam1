@@ -2,7 +2,7 @@ from colorama import init, Fore
 
 init(autoreset=True)
 
-ascii_art = '''
+skull = '''
                       :::!~!!!!!:.
                   .xUHWH!! !!?M88WHX:.
                 .X*#M@$!!  !X!M$$$$$$WWx:.
@@ -25,5 +25,52 @@ $R@i.~~ !     :   ~$$$$$B$$en:``
 ?MXT@Wx.~    :     ~"##*$$$$M~
 '''
 
-def print_ascii_art():
+skull_horns = '''
+          .                                                      .
+        .n                   .                 .                  n.
+  .   .dP                  dP                   9b                 9b.    .
+ 4    qXb         .       dX                     Xb       .        dXp     t
+dX.    9Xb      .dXb    __                         __    dXb.     dXP     .Xb
+9XXb._       _.dXXXXb dXXXXbo.                 .odXXXXb dXXXXb._       _.dXXP
+ 9XXXXXXXXXXXXXXXXXXXVXXXXXXXXOo.           .oOXXXXXXXXVXXXXXXXXXXXXXXXXXXXP
+  `9XXXXXXXXXXXXXXXXXXXXX'~   ~`OOO8b   d8OOO'~   ~`XXXXXXXXXXXXXXXXXXXXXP'
+    `9XXXXXXXXXXXP' `9XX'   DIE    `98v8P'  HUMAN   `XXP' `9XXXXXXXXXXXP'
+        ~~~~~~~       9X.          .db|db.          .XP       ~~~~~~~
+                        )b.  .dbo.dP'`v'`9b.odb.  .dX(
+                      ,dXXXXXXXXXXXb     dXXXXXXXXXXXb.
+                     dXXXXXXXXXXXP'   .   `9XXXXXXXXXXXb
+                    dXXXXXXXXXXXXb   d|b   dXXXXXXXXXXXXb
+                    9XXb'   `XXXXXb.dX|Xb.dXXXXX'   `dXXP
+                     `'      9XXXXXX(   )XXXXXXP      `'
+                              XXXX X.`v'.X XXXX
+                              XP^X'`b   d'`X^XX
+                              X. 9  `   '  P )X
+                              `b  `       '  d'
+                               `             '
+'''
+
+cute_skull = '''
+   _______
+  /       \\
+ /  O   O  \\
+|     ^     |
+|    '-'    |
+ \\_________/ 
+     |||
+     |||
+     |||
+'''
+
+ascii_art_dict = {
+    'skull': skull,
+    'skull_horns': skull_horns,
+    'cute_skull': cute_skull
+}
+
+def print_ascii_art(ascii_name):
+    ascii_art = ascii_art_dict.get(ascii_name)
+
+    if ascii_art is None:
+        return
+
     print(Fore.GREEN + ascii_art)
