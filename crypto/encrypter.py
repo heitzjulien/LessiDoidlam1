@@ -3,10 +3,7 @@ from Crypto.Random import get_random_bytes
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 
-key = get_random_bytes(32)
-with open("key.bin", "wb") as f:
-    # Générer une clé AES de 256 bits
-    f.write(key)
+
 folder = "../dossier_confidentiel"
 
 

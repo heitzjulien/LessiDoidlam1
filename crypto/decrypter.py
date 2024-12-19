@@ -2,10 +2,6 @@ import os
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 
-
-with open("key.bin", 'rb') as f:
-    key = f.read()
-
 folder = "../dossier_confidentiel"
 
 
@@ -37,5 +33,3 @@ def decrypt_folder(folder_path, key):
                 decrypt_file(file_path, key)
                 os.remove(file_path)
     os.remove("key.bin")
-
-decrypt_folder(folder,key)

