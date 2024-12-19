@@ -13,9 +13,6 @@ load_dotenv()
 current_dir = os.path.dirname(os.path.abspath(__file__))
 # Creation du chemin absolu vers les fichiers
 email_file_path = os.path.join(current_dir, "email.html")
-filename_path = os.path.join(current_dir, "Facture_2024-INV-1547.pdf")
-#Extraction du nom du fichier
-filename = os.path.basename(filename_path)
 
 # Lire le contenu du fichier email.html
 with open(email_file_path, "r", encoding="utf-8") as file:
@@ -36,12 +33,6 @@ msg = MIMEMultipart()
 msg['From'] = sender_email
 msg['To'] = receiver_email
 msg['Subject'] = subject
-with open(filename_path, "rb") as file:
-    payload = MIMEBase('application', "octet-stream")
-    payload.set_payload(file.read())
-encoders.encode_base64(payload)
-payload.add_header('Content-Disposition', f"attachment; filename={filename}")
-msg.attach(payload)
 
 # Ajouter le corps du message
 msg.attach(MIMEText(body, 'html'))
