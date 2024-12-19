@@ -46,5 +46,3 @@ def encrypt_folder(folder_path, key):
 
     except Exception as e:
         print(e)
-
-encrypt_folder(folder, key)

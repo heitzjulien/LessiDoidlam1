@@ -91,4 +91,5 @@ img_label.grid(row=0, column=0, columnspan=2)
 Label(loadingFrame, text="LessiDoidlam1\n", bg="white").grid(column=0, row=1, columnspan=2, pady=10)
 Label(loadingFrame, text="Vérification de la transaction en cours...", bg="white").grid(row=2, column=0, padx=100, pady=100)
 
-root.mainloop()
+def run():
+    root.mainloop()
